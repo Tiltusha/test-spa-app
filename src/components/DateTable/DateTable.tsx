@@ -16,6 +16,7 @@ import {
   TextField
 } from '@mui/material';
 import axios from 'axios';
+import styles from './DateTable.module.sass';
 
 interface DataItem {
   id: number;
@@ -29,72 +30,74 @@ interface DataItem {
   employeeSignatureName: string;
 }
 
-const DataTable: React.FC = () => {
+
+const DataTable: React.FC = () => { // компонент таблицы
   const [data, setData] = useState<DataItem[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [openEditForm, setOpenEditForm] = useState(false);
   const [editData, setEditData] = useState<DataItem | null>(null);
 
-  useEffect(() => {
+  useEffect(() => { // эффект для получения данных
     fetchData();
   }, []);
 
-  const fetchData = async () => {
-    try {
+
+  const fetchData = async () => { // функция для получения данных
+    try { // Запрос на получение данных
       const response = await axios.get('https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs/get', {
         headers: {
           'x-auth': localStorage.getItem('authToken') || ''
         }
-      });
+      }); // Обработка полученных данных
       setData(response.data.data);
       setLoading(false);
     } catch (error) {
       console.error('Ошибка при получении данных:', error);
-      setData([]);
+      setData([]); // Очистка данных в случае ошибки
       setLoading(false);
     }
   };
 
   const handleDelete = async (id: number) => {
-    try {
+    try { // Запрос на удаление данных
       await axios.post(`https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs/delete/${id}`, null, {
-        headers: {
+        headers: { // Обработка полученных данных
           'x-auth': localStorage.getItem('authToken') || ''
         }
       });
       const updatedData = data?.filter(item => item.id !== id);
       setData(updatedData || null);
-    } catch (error) {
+    } catch (error) { // Очистка данных в случае ошибки
       console.error('Ошибка при удалении записи:', error);
     }
   };
 
-  const handleEdit = (id: number) => {
+  const handleEdit = (id: number) => { // функция для открытия формы редактирования
     const itemToEdit = data?.find(item => item.id === id);
-    if (itemToEdit) {
+    if (itemToEdit) { // Обработка полученных данных
       setEditData(itemToEdit);
-      setOpenEditForm(true);
+      setOpenEditForm(true); 
     }
   };
 
-  const handleCloseEditForm = () => {
+  const handleCloseEditForm = () => { // функция для закрытия формы редактирования
     setEditData(null);
     setOpenEditForm(false);
   };
 
-  const updateData = () => {
+  const updateData = () => { // функция для обновления данных
     fetchData(); // Обновляем данные после изменения
   };
 
-  const handleCreate = () => {
+  const handleCreate = () => { // функция для открытия формы создания
     setOpenEditForm(true);
   };
 
-  if (loading) {
+  if (loading) { // Отображение индикатора загрузки
     return <CircularProgress />;
   }
 
-  if (!data || data.length === 0) {
+  if (!data || data.length === 0) { // Отображение сообщения при отсутствии данных
     return <div>Данные не найдены или произошла ошибка загрузки.</div>;
   }
 
@@ -155,14 +158,14 @@ const DataTable: React.FC = () => {
   );
 };
 
-interface EditFormProps {
-  handleClose: () => void;
-  dataItem: DataItem | null;
-  updateData: () => void;
+interface EditFormProps { // интерфейс для формы редактирования
+  handleClose: () => void; // функция для закрытия формы
+  dataItem: DataItem | null; // данные для редактирования
+  updateData: () => void; // функция для обновления данных
 }
 
-const EditForm: React.FC<EditFormProps> = ({ handleClose, dataItem, updateData }) => {
-  const [formData, setFormData] = useState<DataItem>({
+const EditForm: React.FC<EditFormProps> = ({ handleClose, dataItem, updateData }) => { // компонент формы редактирования
+  const [formData, setFormData] = useState<DataItem>({ // состояние для хранения данных формы
     id: dataItem ? dataItem.id : 0,
     companySigDate: dataItem ? dataItem.companySigDate : '',
     companySignatureName: dataItem ? dataItem.companySignatureName : '',
@@ -174,22 +177,22 @@ const EditForm: React.FC<EditFormProps> = ({ handleClose, dataItem, updateData }
     employeeSignatureName: dataItem ? dataItem.employeeSignatureName : '',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => { // функция для изменения данных формы
     const { name, value } = e.target;
-    setFormData(prevData => ({
+    setFormData(prevData => ({ // обновление данных формы
       ...prevData,
       [name]: value
     }));
   };
 
-  const handleSubmit = async () => {
-    try {
+  const handleSubmit = async () => { // функция для сохранения данных
+    try { // обработка ошибок
       const url = formData.id
         ? `https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs/set/${formData.id}`
         : 'https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs/create';
 
       const response = await axios.post(url, formData, {
-        headers: {
+        headers: { // обработка полученных данных
           'x-auth': localStorage.getItem('authToken') || ''
         }
       });
@@ -201,67 +204,69 @@ const EditForm: React.FC<EditFormProps> = ({ handleClose, dataItem, updateData }
     }
   };
 
-  return (
+  return ( // возвращаем форму
     <div>
-      <TextField
+      <TextField id="filled-basic" variant="filled"
         name="companySigDate"
         label="Дата подписи компанией"
         value={formData.companySigDate}
         onChange={handleChange}
         fullWidth
       />
-      <TextField
+      <TextField id="filled-basic" variant="filled"
         name="companySignatureName"
         label="Имя подписавшего компанию"
         value={formData.companySignatureName}
         onChange={handleChange}
         fullWidth
       />
-      <TextField
+      <TextField id="filled-basic" variant="filled"
         name="documentName"
         label="Название документа"
         value={formData.documentName}
         onChange={handleChange}
         fullWidth
       />
-      <TextField
+      <TextField id="filled-basic" variant="filled"
         name="documentStatus"
         label="Статус документа"
         value={formData.documentStatus}
         onChange={handleChange}
         fullWidth
       />
-      <TextField
+      <TextField id="filled-basic" variant="filled"
         name="documentType"
         label="Тип документа"
         value={formData.documentType}
         onChange={handleChange}
         fullWidth
       />
-      <TextField
+      <TextField id="filled-basic" variant="filled"
         name="employeeNumber"
         label="Номер сотрудника"
         value={formData.employeeNumber}
         onChange={handleChange}
         fullWidth
       />
-      <TextField
+      <TextField id="filled-basic" variant="filled"
         name="employeeSigDate"
         label="Дата подписи сотрудником"
         value={formData.employeeSigDate}
         onChange={handleChange}
         fullWidth
       />
-      <TextField
+      <TextField id="filled-basic" variant="filled"
         name="employeeSignatureName"
         label="Имя подписавшего сотрудника"
         value={formData.employeeSignatureName}
         onChange={handleChange}
         fullWidth
       />
-      <Button onClick={handleSubmit} color="primary">Сохранить</Button>
+      <Button variant="contained" onClick={handleSubmit} color="primary">Сохранить</Button>
     </div>
   );
 };
 
 export default DataTable;
+
+
