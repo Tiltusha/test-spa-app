@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { Button, TextField, Typography } from '@mui/material';
-import { Alert } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './LoginPage.module.sass'
-import { BusAlert } from '@mui/icons-material';
 
 const AuthForm: React.FC = () => {
   const [username, setUsername] = useState(''); // состояние для хранения значения логина

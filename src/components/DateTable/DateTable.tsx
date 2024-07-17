@@ -16,7 +16,6 @@ import {
   TextField
 } from '@mui/material';
 import axios from 'axios';
-import styles from './DateTable.module.sass';
 
 interface DataItem {
   id: number;
@@ -29,7 +28,6 @@ interface DataItem {
   employeeSigDate: string;
   employeeSignatureName: string;
 }
-
 
 const DataTable: React.FC = () => { // компонент таблицы
   const [data, setData] = useState<DataItem[] | null>(null);
