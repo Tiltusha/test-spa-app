@@ -4,24 +4,24 @@
 
 ## Установка
 
-1. Клонируйте репозиторий:
-git clone https://github.com/tiltusha/test-spa-app.git
-Перейдите в директорию проекта:
-cd test-spa-app
-Установите зависимости:
+1. Клонируйте репозиторий: <br>
+git clone https://github.com/tiltusha/test-spa-app.git <br>
+Перейдите в директорию проекта: <br>
+cd test-spa-app <br>
+Установите зависимости: <br>
 npm install
 
 ## Использование
 
-Запустите приложение:
-
-npm start
-Откройте http://localhost:3000 в вашем браузере для просмотра.
+Запустите приложение: <br>
+<br>
+npm start <br>
+Откройте http://localhost:3000 в вашем браузере для просмотра. <br>
 
 ## Архитектура
 
-components/Auth - компоненты для аутентификации 
-components/Buttons - компоненты для кнопок
-components/DateTable - компоненты для таблицы
-pages/HomePage - страница с таблицей
-pages/NotFoundPage - страница с ошибкой 404
+components/Auth - компоненты для аутентификации  <br>
+components/Buttons - компоненты для кнопок <br>
+components/DateTable - компоненты для таблицы <br>
+pages/HomePage - страница с таблицей <br>
+pages/NotFoundPage - страница с ошибкой 404 <br>
