@@ -3,6 +3,8 @@ import { Button, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import styles from './LoginPage.module.sass'
+
 const AuthForm: React.FC = () => {
   const [username, setUsername] = useState(''); // состояние для хранения значения логина
   const [password, setPassword] = useState(''); // состояние для хранения значения пароля
@@ -26,15 +28,14 @@ const AuthForm: React.FC = () => {
     }
   };
 
-
-
   return (
-    <div>
-      <Typography variant="h5">Форма авторизации</Typography>
-      <TextField label="Логин" value={username} onChange={(e) => setUsername(e.target.value)} /> {/* поле ввода логина */}
-      <TextField label="Пароль" type="password" value={password} onChange={(e) => setPassword(e.target.value)} /> {/* поле ввода пароля */}
-      <Button variant="contained" onClick={handleLogin}>Войти</Button> {/* кнопка "Войти" */}
-    
+    <div className={styles.container}>
+        <div className={styles.form}>
+            <Typography className={styles.title} component="h1" variant="h5">Авторизация</Typography>
+            <TextField label="Логин" value={username} onChange={(e) => setUsername(e.target.value)} /> {/* поле ввода логина */}
+            <TextField label="Пароль" type="password" value={password} onChange={(e) => setPassword(e.target.value)} /> {/* поле ввода пароля */}
+            <Button variant="contained" onClick={handleLogin}>Войти</Button> {/* кнопка "Войти" */}
+        </div>
     </div>
   );
 };

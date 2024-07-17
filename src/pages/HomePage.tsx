@@ -1,13 +1,19 @@
 import React from 'react';
 import DataTable from '../components/DateTable/DateTable';
 import LogOut from '../components/Buttons/LogOut';
+import ClearToken from '../components/Buttons/ClearToken';
+
+import styles from './HomePage.module.sass'
 
 const HomePage: React.FC = () => {
   return (
-    <div>
-      <h1>Home Page</h1>
+    <div className={styles.container}>
+      <h1>Таблица</h1>
       <DataTable />
-      <LogOut></LogOut>
+      <div className={styles.buttons}>
+        <LogOut></LogOut>
+        <ClearToken></ClearToken>
+      </div>
     </div>
   );
 }

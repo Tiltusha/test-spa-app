@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 function LogOut() {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ function LogOut() {
 
   return (
     <div>
-      <button onClick={handleLogout}>Logout</button>
+      <Button variant='contained' color='secondary' onClick={handleLogout}>Выйти</Button>
     </div>
   )
 }
